@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <h1 class="navbar-brand mb-0 h1 d-flex align-items-center">
+     <img src="{% static 'img/logo.png' %}" alt="Logo" width="40" height="40" class="me-2">
+      Quiz System
+      </h1>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+          </li>
+          <li class="nav-item ms-3">
+            <button id="modeToggle" class="btn btn-outline-secondary btn-sm">🌙 Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4 rounded-4 bg-white" style="width: 450px;">
+      <form method="POST">
+        {% csrf_token %}
+        <h2 class="text-center mb-4 text-primary fw-bold">Create Account 📝</h2>
+
+        <div class="mb-3">
+          <label for="first_name" class="form-label fw-semibold">First Name</label>
+          <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Enter first name">
+        </div>
+
+        <div class="mb-3">
+          <label for="last_name" class="form-label fw-semibold">Last Name</label>
+          <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter last name">
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold">Email</label>
+          <input type="email" name="email" id="email" class="form-control" placeholder="example@mail.com">
+        </div>
+
+        <div class="mb-3">
+          <label for="password1" class="form-label fw-semibold">Password</label>
+          <div class="input-group">
+            <input type="password" name="password" id="password1" class="form-control" placeholder="••••••••">
+            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password1')">👁️</button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password2" class="form-label fw-semibold">Confirm Password</label>
+          <div class="input-group">
+            <input type="password" name="confirm_password" id="password2" class="form-control" placeholder="••••••••">
+            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password2')">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" name="register" class="btn btn-success w-100 mt-2">Register</button>
+
+        <div class="text-center mt-3">
+          <a href="{% url 'login' %}" class="text-decoration-none">Already have an account? <span class="text-primary">Log In</span></a>
+        </div>
+
+        {% if messages %}
+        <div class="alert alert-danger mt-3 mb-0">
+          <ul class="mb-0">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    const body = document.body;
+    const toggleBtn = document.getElementById("modeToggle");
+
+    if (localStorage.getItem("mode") === "dark") {
+      body.classList.replace("bg-light", "bg-dark");
+      body.classList.replace("text-dark", "text-light");
+      toggleBtn.textContent = "☀️ Light Mode";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      if (body.classList.contains("bg-light")) {
+        body.classList.replace("bg-light", "bg-dark");
+        body.classList.replace("text-dark", "text-light");
+        toggleBtn.textContent = "☀️ Light Mode";
+        localStorage.setItem("mode", "dark");
+      } else {
+        body.classList.replace("bg-dark", "bg-light");
+        body.classList.replace("text-light", "text-dark");
+        toggleBtn.textContent = "🌙 Dark Mode";
+        localStorage.setItem("mode", "light");
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

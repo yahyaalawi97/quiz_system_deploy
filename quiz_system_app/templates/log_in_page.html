@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz System</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-dark">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <h1 class="navbar-brand mb-0 h1 d-flex align-items-center">
+     <img src="{% static 'img/logo.png' %}" alt="Logo" width="40" height="40" class="me-2">
+      Quiz System
+      </h1>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Login</a>
+          </li>
+          <li class="nav-item ms-3">
+            <button id="modeToggle" class="btn btn-outline-secondary btn-sm">🌙 Dark Mode</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5 text-center">
+    <h1 class="fw-bold">Welcome to Quiz System!</h1>
+    <p class="lead">Please log in to start, or register if you are new to our family.</p>
+    <p>For more about us, visit <a href="{% url 'about_us' %}">About Us</a>.</p>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center vh-75">
+    <div class="card shadow-lg p-4 rounded-4" style="width: 400px;">
+      <form method="POST">
+        {% csrf_token %}
+        <h2 class="text-center mb-4 fw-bold">Welcome Back 👋</h2>
+
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold">Email</label>
+          <input type="email" name="login_email" id="email" class="form-control" placeholder="Enter your email">
+        </div>
+
+        <div class="mb-3">
+          <label for="password3" class="form-label fw-semibold">Password</label>
+          <div class="input-group">
+            <input type="password" name="login_password" id="password3" class="form-control" placeholder="••••••••">
+            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password3')">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" name="login" class="btn btn-primary w-100 mt-2">Log In</button>
+
+        <div class="text-center mt-3">
+          <a href="{% url 'register' %}" class="text-decoration-none">Don’t have an account? <span class="text-primary">Register</span></a>
+        </div>
+
+        {% if messages %}
+        <div class="alert alert-danger mt-3 mb-0">
+          <ul class="mb-0">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    const body = document.body;
+    const toggleBtn = document.getElementById("modeToggle");
+
+    if (localStorage.getItem("mode") === "dark") {
+      body.classList.replace("bg-light", "bg-dark");
+      body.classList.replace("text-dark", "text-light");
+      toggleBtn.textContent = "☀️ Light Mode";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      if (body.classList.contains("bg-light")) {
+        body.classList.replace("bg-light", "bg-dark");
+        body.classList.replace("text-dark", "text-light");
+        toggleBtn.textContent = "☀️ Light Mode";
+        localStorage.setItem("mode", "dark");
+      } else {
+        body.classList.replace("bg-dark", "bg-light");
+        body.classList.replace("text-light", "text-dark");
+        toggleBtn.textContent = "🌙 Dark Mode";
+        localStorage.setItem("mode", "light");
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

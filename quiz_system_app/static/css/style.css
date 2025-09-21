@@ -1,0 +1,75 @@
+#about_us_intro {
+    border: 1px solid gray;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.274);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    width:fit-content;
+    margin: 50px auto;
+     box-shadow: 0 4px 6px rgba(212, 17, 17, 0.1);
+}
+
+
+#aboutCarousel {
+  /* position: relative; */
+  width: 600px; 
+  margin: 50px auto; 
+  width: fit-content; 
+  
+}
+
+
+
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(1); 
+    transition: all 0.3s;
+}
+
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+    filter: invert(0.7); 
+}
+
+
+body.bg-dark .about-card {
+  box-shadow: 0 4px 6px rgba(255,255,255,0.1);
+}
+.about-card {
+  width: 500px;
+  min-height: 300px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  transition: all 0.3s;
+   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+body.bg-dark .about-card {
+  background-color: rgba(65, 76, 87, 0.9); 
+  color: #f8f9fa; 
+}
+.about-card a {
+  transition: transform 0.3s, color 0.3s;
+}
+
+.about-card a:hover {
+  transform: scale(1.5); 
+  color: #0d6efd;         
+}
+.navbar a {
+     transition: transform 0.3s, color 0.3s;
+}
+.navbar a:hover{
+    transform: scale(1.5); 
+  color: #0d6efd; 
+}
+
+
