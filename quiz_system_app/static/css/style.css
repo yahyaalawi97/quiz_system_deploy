@@ -17,15 +17,11 @@
   width: fit-content; 
   
 }
-
-
-
 .carousel-item {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     width: 40px;
@@ -36,9 +32,8 @@
 
 .carousel-control-prev:hover .carousel-control-prev-icon,
 .carousel-control-next:hover .carousel-control-next-icon {
-    filter: invert(0.7); 
+    filter: invert(0.9); 
 }
-
 
 body.bg-dark .about-card {
   box-shadow: 0 4px 6px rgba(255,255,255,0.1);
@@ -65,11 +60,22 @@ body.bg-dark .about-card {
   color: #0d6efd;         
 }
 .navbar a {
-     transition: transform 0.3s, color 0.3s;
+    transition: transform 0.3s, color 0.3s;
 }
 .navbar a:hover{
-    transform: scale(1.5); 
+  transform: scale(1.2); 
   color: #0d6efd; 
 }
+.card-body {
+    background-color: #5286b9; 
+    color: #f8f9fa; 
+ 
+}
+
+.bg-dark .card-body {
+ background-color: #ffffff;
+  color: #000000;
+}
+
 
 

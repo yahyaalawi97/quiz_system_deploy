@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Creat Quiz</title>
      {% load static %}
      <link rel="stylesheet" href="{% static 'css/home.css' %}">
      <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -26,6 +26,9 @@
             <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">logOut</a>
           </li>
           <li class="nav-item ms-3">
@@ -38,62 +41,38 @@
    
 </h1>
     <h1 class="text-center mt-5">Hello {{user.first_name}} 👋 </h1>
-    <p class="text-center mt-3 fs-3">let us start working </p>
-   {%if user.role == 'admin' %} 
-<div class="container mb-15">
-    <div class="d-flex justify-content-end">
-        <a href="{% url 'create_quiz' %}" class="btn btn-success btn-lg shadow d-flex align-items-center">
-            <i class="bi bi-plus-circle me-2"></i>
-            Create a New Quiz
-        </a>
-    </div>
-</div>
-    {% endif %}
-</div>
-    <body class="bg-light p-4">
-  <div class="container">
-    <h1 class="mb-4">Available Quizzes</h1>
-
-    <div class="row">
-      {% for quiz in quizzes %}
-        <div class="col-md-4 ">
-          <div class="card mb-3 shadow-sm ">
-            <div class="card-body">
-              <h4 class="card-title">{{quiz.id}}- {{ quiz.title }}</h4>
-              <p class="card-text">{{ quiz.desc }}</p>
-              <div class="d-flex justify-content-between">
-                <a href="{% url 'do_quiz' quiz.id %}" class="btn btn-success">Do the Quiz</a>
-                <a href="{% url 'edit_quiz' quiz.id %}" class="btn btn-warning">Edit</a>
-                <a href="{% url 'delete_quiz' quiz.id %}" 
-                  class="btn btn-danger btn-sm" 
-                  onclick="return confirm('Are you sure you want to delete this quiz?');">
-                  Delete</a>
-              </div>
+    <p class="text-center mt-3 fs-3">let us start working ,create a new quiz 📚 </p>
+    
+    <form id="quizForm">
+        {% csrf_token %}
+        <div class="row align-items-center mb-3 ms-3">
+            <div class="col-auto">
+                <label for="quiz_title" class="col-form-label fs-3">Quiz Title :</label>
             </div>
-          </div>
+            <div class="col-auto">
+                <input type="text" id="quiz_title" class="form-control form-control-sm" name="title" required>
+            </div>
         </div>
-      {% empty %}
-        <p>No quizzes yet.</p>
-      {% endfor %}
-    </div>
-  </div>
+        <div class="mb-3 ms-3">
+            <label for="quiz_description" class="form-label fs-3">Quiz Description :</label>
+            <textarea name="desc" id="quiz_desc" class="form-control" style="width :600px" rows="3" required></textarea>
+        </div>
+        <hr>
+        <h3 class="ms-3">Questions :</h3>
+        <div class="ms-3 mt-2" id="questions-container"></div>
+
+        <button type="button" class="btn btn-secondary mb-3 ms-3" onclick="addQuestion()">+ Add Question</button>
+        <button type="submit" class="btn btn-primary ms-3">Save Quiz</button>
+
+    </form>
 
 
-
-
-
-
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
-<script type="text/javascript" 
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
-
+    <script>
+        const createQuizURL = "{% url 'create_quiz' %}";
+        const homeURL = "{% url 'home' %}";
+    </script>
+    <script src="{% static 'script/create_quiz.js' %}"></script>
     <script src="{% static 'script/mode.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
