@@ -40,57 +40,56 @@
   </nav>
   <h1 class="mb-3 text-center mt-3">Are you ready <span class="text-success ">{{user.first_name}} ?</span></h1>
   <h2 class="mb-3 text-center">let's do it !</h2>
-  <h2 class="mb-3  text-warning">{{quiz.title}} Quiz : </h2>
-  {% for question in question %}
-        <div class="ms-3 mt-2 p-3 border rounded">
-            <label class="fw-bold">Question {{ forloop.counter }}</label>
-            <input type="text" name="q{{ forloop.counter }}_text" value="{{ question.question_text }}" class="form-control mb-2 w-50" required>
+  <h2 class="mb-3  text-warning  ms-5">{{quiz.title}} Quiz : </h2>
 
-            <label>Type</label>
-            <select name="q{{ forloop.counter }}_type" class="form-select mb-2 w-50" onchange="toggleOptions(this, {{ forloop.counter }})">
-                <option value="mcq" {% if question.question_type == 'mcq' %}selected{% endif %}>MCQ</option>
-                <option value="tf" {% if question.question_type == 'tf' %}selected{% endif %}>True/False</option>
-            </select>
 
-            <!-- MCQ  -->
-                <div id="q{{ forloop.counter }}_mcq" style="display: {% if question.question_type == 'mcq' %}block{% else %}none{% endif %};">
-                {% if question.options %}
-                    {% for option in question.options %}
-                    <div class="form-check mb-1 w-50 d-flex align-items-center">
-                        <input class="form-check-input me-2" type="radio" 
-                            name="q{{ forloop.counter }}_correct"
-                            value="{{ option }}"
-                            {% if option == question.correct_answer %} checked {% endif %}>
-                        <input type="text" name="q{{ forloop.counter }}_option{{ forloop.counter0|add:forloop.counter }}" 
-                            value="{{ option }}" 
-                            class="form-control w-75"
-                            placeholder="Option {{ forloop.counter }}">
-                    </div>
-                    {% endfor %}
+
+    <form id="doing_quiz_page" method="POST" action="{% url 'submit_quiz' quiz.id %}">
+      <article>
+
+        {% csrf_token %}
+        {% for question in question %}
+        <div class="ms-3 mt-2 p-3 border rounded card-body">
+          <label class="fw-bold">Question {{ forloop.counter }}: {{ question.question_text }}</label>
+          
+          <!-- MCQ -->
+          {% if question.question_type == 'mcq' %}
+          {% for option in question.options %}
+          <div class="form-check">
+            <input class="form-check-input" type="radio"
+            name="q{{ question.id }}"
+            value="{{ option }}"
+            required>
+           <label class="form-check-label">{{ option }}</label>                  
+            </div>
+            {% endfor %}
+            {% endif %}
+                              
+                              <!-- True/False -->
+            {% if question.question_type == 'tf' %}
+            <div class="form-check">
+            <input class="form-check-input" type="radio"
+                  name="q{{ question.id }}"
+                  value="True" required>
+                  <label class="form-check-label">True</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio"
+                  name="q{{ question.id }}"
+                  value="False" required>
+                  <label class="form-check-label">False</label>
+                </div>
                 {% endif %}
-            </div>
-
-            <!-- True/False -->
-            <div id="q{{ forloop.counter }}_tf" style="display: {% if question.question_type == 'tf' %}block{% else %}none{% endif %};">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" 
-                           name="q{{ forloop.counter }}_correct"
-                           value="True"
-                           {% if question.correct_answer == "True" %} checked {% endif %}>
-                    <label class="form-check-label {% if question.correct_answer == 'True' %}text-success fw-bold{% endif %}">True</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" 
-                           name="q{{ forloop.counter }}_correct"
-                           value="False"
-                           {% if question.correct_answer == "False" %} checked {% endif %}>
-                    <label class="form-check-label {% if question.correct_answer == 'False' %}text-success fw-bold{% endif %}">False</label>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-
-   <script src="{% static 'script/mode.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+              </div>
+              {% endfor %}
+            </article>
+              <button type="submit" class="btn btn-primary mt-3">Submit and check the result !</button>
+            </form>
+             
+ 
+              
+              
+              <script src="{% static 'script/mode.js' %}"></script>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <body>
 </html>

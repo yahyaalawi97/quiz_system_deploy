@@ -1,0 +1,73 @@
+.navbar a {
+    transition: transform 0.3s, color 0.3s;
+}
+
+.navbar a:hover {
+    transform: scale(1.2); 
+    color: #0d6efd; 
+}
+.about-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.card.about-card {
+    width: 100%;
+    max-width: 500px;
+    min-height: 300px;
+    margin: 0 auto;
+    border-radius: 1rem;
+    background-color: #e6f4ea !important;
+    color: #212529 !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card.about-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #f8f9fa;
+}
+
+body.dark-mode .card.about-card {
+    background-color: #2a2a2a !important;
+    color: #f8f9fa !important;
+    box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+}
+
+
+
+#aboutCarousel {
+    margin-top: 50px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+
+h1,
+h2,
+h5 {
+    transition: color 0.3s ease;
+}
+.icon {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.icon.facebook:hover { color: #3b5998; }
+.icon.whatsapp:hover { color: #25D366; }
+.icon.instagram:hover { color: #E1306C; }
+.icon.gmail:hover { color: #D44638; }
+.icon.github:hover { color: #645757; }
+.icon.linkedin:hover { color: #0077B5; }

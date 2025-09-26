@@ -35,7 +35,7 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = LOGINManeger()
     def __str__(self):
-        return f" {self.first_name} : {self.role} "
+        return f" {self.first_name} {self.last_name} "
 
 class QuizManeger (models.Manager):
     def quiz_validator(Self , postData):

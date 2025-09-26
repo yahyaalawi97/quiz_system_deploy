@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creat Quiz</title>
+  <title>Document</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -40,46 +40,47 @@
       </div>
     </div>
   </nav>
+  <div class="container">
+    <div class="text-center mb-4">
+      {% if percentage > 50%}
+      <h1 class="text-success fw-bold">Well done, {{ user.first_name }} 👏👏👏!</h1>
+      <h2 class="text-success fw-bold">Your Score: {{ score }}/{{ total }} ({{ percentage }}%)</h2>
+      {% else %}
+      <h1 class="text-danger fw-bold">Oops! {{ user.first_name }} 😅 Don't give up, try the quiz again!</h1>
 
-  </h1>
-  <h1 class="text-center mt-5">Hello {{user.first_name}} 👋 </h1>
-  <p class="text-center mt-3 fs-3">let us start working ,create a new quiz 📚 </p>
-
-  <form id="quizForm">
-    {% csrf_token %}
-    
-    <div class="row align-items-center mb-3 ms-3">
-      <div class="col-auto">
-        <label for="quiz_title" class="col-form-label fs-3">Quiz Title :</label>
-      </div>
-      <div class="col-auto">
-        <input type="text" id="quiz_title" class="form-control form-control-sm" name="title" required>
+      <h2 class="text-danger fw-bold">Your Score: {{ score }}/{{ total }} ({{ percentage }}%)</h2>
+      {% endif %}
+    </div>
+    {% for r in results %}
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Question {{ forloop.counter }}:</h5>
+        <p>{{ r.question }}</p>
+        <p>Your Answer:
+          <span class="{% if r.is_correct %}text-success fw-bold{% else %}text-danger fw-bold{% endif %}">
+            {% if r.is_correct %}
+            ✅ {{ r.your_answer }}
+            {% else %}
+            ❌ {{ r.your_answer }}
+            {% endif %}
+          </span>
+        </p>
+        {% if not r.is_correct %}
+        <p>Correct Answer: <span class="text-success fw-bold">✅ {{ r.correct_answer }}</span></p>
+        {% endif %}
       </div>
     </div>
-    <div class="mb-3 ms-3">
-      <label for="quiz_description" class="form-label fs-3">Quiz Description :</label>
-      <textarea name="desc" id="quiz_desc" class="form-control" style="width :600px" rows="3" required></textarea>
-    </div>
-    <hr>
-    <h3 class="ms-3">Questions :</h3>
-    <div class="ms-3 mt-2" id="questions-container"></div>
+    {% endfor %}
 
-    
-  <div class="text-center mt-4">
-    <button type="button" class="btn btn-success btn-lg me-3" onclick="addQuestion()">+ Add Question</button>
-    <button type="submit" class="btn btn-primary btn-lg ">Save Quiz</button>
+
+    <div class="text-center mt-4 d-flex justify-content-evenly">
+      <a href="{% url 'home' %}" class="btn btn-success btn-lg">Back to Home</a>
+      <a href="{% url 'do_quiz' quiz.id %}" class="btn btn-warning btn-lg">Retake The Quiz</a>
+    </div>
   </div>
-
-  </form>
-
-
-  <script>
-    const createQuizURL = "{% url 'create_quiz' %}";
-    const homeURL = "{% url 'home' %}";
-  </script>
-  <script src="{% static 'script/create_quiz.js' %}"></script>
   <script src="{% static 'script/mode.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+  <body>
 
 </html>

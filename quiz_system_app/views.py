@@ -214,5 +214,48 @@ def doquiz(request , quiz_id):
 
     return render (request , "do_quiz.html" , context)
 
+from django.shortcuts import render, redirect
+from .models import Quiz, Question
+
+def submit_quiz(request, quiz_id):
+    if request.method == "POST":
+        user_id = request.session.get('user_id')
+        if not user_id:
+         return redirect('login')
+        user = User.objects.get(id=user_id)
+        quiz = Quiz.objects.get(id=quiz_id)
+        questions = Question.objects.filter(quiz=quiz)
+        score = 0
+        total = questions.count()
+        results = []
+
+        for q in questions:
+            user_answer = request.POST.get(f'q{q.id}')
+            correct = user_answer == q.correct_answer
+            if correct:
+                score += 1
+            results.append({
+                'question': q.question_text,
+                'your_answer': user_answer,
+                'correct_answer': q.correct_answer,
+                'is_correct': correct
+            })
+
+        percentage = (score / total) * 100 if total > 0 else 0
+        percentage = round(percentage, 2)
+
+        return render(request, "result.html", {
+            'quiz': quiz,
+            'score': score,
+            'total': total,
+            'results': results,
+            'percentage': percentage,
+            'user' : user
+        })
+    else:
+        return redirect('home')
+
+
+
 
      
