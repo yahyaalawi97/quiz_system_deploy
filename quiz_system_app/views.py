@@ -186,7 +186,7 @@ def editquiz (request , quiz_id):
 
             question.save()
 
-            return redirect ("home")
+        return redirect ("home")
 
 
     context = {
