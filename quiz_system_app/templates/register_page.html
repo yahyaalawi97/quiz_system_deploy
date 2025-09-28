@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item">
-            <a class="nav-link" href="#">About Us</a>
+            <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">Log In</a>
@@ -36,8 +36,8 @@
   </nav>
   
 
-  <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow-lg p-4 rounded-4 bg-white" style="width: 450px;">
+  <div class="d-flex justify-content-center align-items-center mt-3 px-3">
+    <div class="login-card card shadow-lg p-4 rounded-4 bg-white">
       <form method="POST">
         {% csrf_token %}
         <h2 class="text-center mb-4 text-primary fw-bold">Create Account 📝</h2>
@@ -51,6 +51,15 @@
           <label for="last_name" class="form-label fw-semibold">Last Name</label>
           <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter last name">
         </div>
+   <div class="mb-3">
+  <label for="role" class="form-label fw-semibold">You are a :</label>
+  <select name="role" id="role" class="form-select">
+    <option value="">-- Select Role --</option>
+    <option value="admin">👨‍🏫 Teacher</option>
+    <option value="student">🎓 Student</option>
+  </select>
+</div>
+
 
         <div class="mb-3">
           <label for="email" class="form-label fw-semibold">Email</label>
@@ -92,36 +101,9 @@
     </div>
   </div>
 
-  <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === "password" ? "text" : "password";
-    }
-
-    const body = document.body;
-    const toggleBtn = document.getElementById("modeToggle");
-
-    if (localStorage.getItem("mode") === "dark") {
-      body.classList.replace("bg-light", "bg-dark");
-      body.classList.replace("text-dark", "text-light");
-      toggleBtn.textContent = "☀️ Light Mode";
-    }
-
-    toggleBtn.addEventListener("click", () => {
-      if (body.classList.contains("bg-light")) {
-        body.classList.replace("bg-light", "bg-dark");
-        body.classList.replace("text-dark", "text-light");
-        toggleBtn.textContent = "☀️ Light Mode";
-        localStorage.setItem("mode", "dark");
-      } else {
-        body.classList.replace("bg-dark", "bg-light");
-        body.classList.replace("text-light", "text-dark");
-        toggleBtn.textContent = "🌙 Dark Mode";
-        localStorage.setItem("mode", "light");
-      }
-    });
-  </script>
-
+  
+  <script src="{% static 'script/mode.js' %}"></script>
+  <script src="{% static 'script/role.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -3,6 +3,19 @@ from .models import User , Question , Quiz , result
 from django.contrib import messages 
 import bcrypt
 from django.http import JsonResponse
+from django.db.models import Count, Q
+from django.utils import timezone
+# API ************************
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import QuizSerializer
+class QuizListAPI(APIView):
+    def get(self, request):
+        quizzes = Quiz.objects.all()
+        serializer = QuizSerializer(quizzes, many=True)
+        return Response(serializer.data)
+
 
 #log in 
 def login(request):
@@ -34,6 +47,7 @@ def register (request):
             email = request.POST.get("email")
             password = request.POST.get("password")
             confirm_password = request.POST.get("confirm_password")
+            role = request.POST.get("role")
             if password != confirm_password:
                 messages.error(request, "Passwords do not match!")
             elif User.objects.filter(email=email).exists():
@@ -44,7 +58,8 @@ def register (request):
                     first_name=first_name,
                     last_name=last_name,
                     email=email,
-                    password=hashed_pw
+                    password=hashed_pw,
+                    role = role,
                 )
                 messages.success(request, "Registration successful!")
                 return redirect('register')
@@ -214,14 +229,12 @@ def doquiz(request , quiz_id):
 
     return render (request , "do_quiz.html" , context)
 
-from django.shortcuts import render, redirect
-from .models import Quiz, Question
 
 def submit_quiz(request, quiz_id):
     if request.method == "POST":
         user_id = request.session.get('user_id')
         if not user_id:
-         return redirect('login')
+            return redirect('login')
         user = User.objects.get(id=user_id)
         quiz = Quiz.objects.get(id=quiz_id)
         questions = Question.objects.filter(quiz=quiz)
@@ -241,8 +254,25 @@ def submit_quiz(request, quiz_id):
                 'is_correct': correct
             })
 
+        res, created = result.objects.update_or_create(
+            user=user,
+            quiz=quiz,
+            defaults={'score': score, 'total_questions': total, 'attempt_date': timezone.now()}
+        )
+        
         percentage = (score / total) * 100 if total > 0 else 0
         percentage = round(percentage, 2)
+
+        all_results = result.objects.filter(quiz=quiz)
+        total_students = all_results.values('user').distinct().count()
+
+        passed_students = sum(
+            1 for r in all_results
+            if r.total_questions > 0 and (r.score / r.total_questions) >= 0.5
+        )
+
+        success_rate = (passed_students / total_students) * 100 if total_students > 0 else 0
+        success_rate = round(success_rate, 2)
 
         return render(request, "result.html", {
             'quiz': quiz,
@@ -250,10 +280,15 @@ def submit_quiz(request, quiz_id):
             'total': total,
             'results': results,
             'percentage': percentage,
-            'user' : user
+            'user': user,
+            'total_students': total_students,
+            'passed_students': passed_students,
+            'success_rate': success_rate
         })
     else:
         return redirect('home')
+
+
 
 
 

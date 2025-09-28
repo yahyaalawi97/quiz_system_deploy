@@ -48,27 +48,30 @@
   <form id="quizForm">
     {% csrf_token %}
     
-    <div class="row align-items-center mb-3 ms-3">
-      <div class="col-auto">
-        <label for="quiz_title" class="col-form-label fs-3">Quiz Title :</label>
-      </div>
-      <div class="col-auto">
-        <input type="text" id="quiz_title" class="form-control form-control-sm" name="title" required>
-      </div>
-    </div>
+   <div class="row align-items-center mb-3 ms-3 ">
+  <div class="col-12 col-md-auto mb-2 mb-md-0">
+    <label for="quiz_title" class="col-form-label fs-3">Quiz Title :</label>
+  </div>
+  <div class="col-12 col-md-auto">
+    <input type="text" id="quiz_title" class="form-control form-control-sm" style="width: 200px;" name="title" required>
+  </div>
+</div>
+
+
     <div class="mb-3 ms-3">
       <label for="quiz_description" class="form-label fs-3">Quiz Description :</label>
-      <textarea name="desc" id="quiz_desc" class="form-control" style="width :600px" rows="3" required></textarea>
+      <textarea name="desc" id="quiz_desc" class="form-control sm" rows="2" required></textarea>
     </div>
     <hr>
     <h3 class="ms-3">Questions :</h3>
     <div class="ms-3 mt-2" id="questions-container"></div>
 
     
-  <div class="text-center mt-4">
-    <button type="button" class="btn btn-success btn-lg me-3" onclick="addQuestion()">+ Add Question</button>
-    <button type="submit" class="btn btn-primary btn-lg ">Save Quiz</button>
-  </div>
+  <div class="d-flex flex-column flex-md-row gap-2 justify-content-center mt-4">
+  <button type="button" class="btn btn-success btn-lg" onclick="addQuestion()">+ Add Question</button>
+  <button type="submit" class="btn btn-primary btn-lg">Save Quiz</button>
+</div>
+
 
   </form>
 

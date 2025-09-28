@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import QuizListAPI
 
 urlpatterns = [
     path('', views.login, name="login"),
@@ -12,4 +13,5 @@ urlpatterns = [
     path('delete_quiz/<int:quiz_id>/',views.deletequiz , name="delete_quiz"),
     path('do_quiz/<int:quiz_id>/',views.doquiz , name="do_quiz"),
     path('submit_quiz/<int:quiz_id>/', views.submit_quiz, name='submit_quiz'),
+    path('api/quizzes/', QuizListAPI.as_view(), name='quiz_list_api'),
 ]

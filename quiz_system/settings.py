@@ -25,12 +25,14 @@ SECRET_KEY = 'django-insecure-7^=g)_d07*_3*emg1w)r0t=f07!d5cw2ftn1&)p5xw0hfj#iwv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['your-ec2-ip', 'your-domain.com']
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'quiz_system_app',
     'django.contrib.admin',
     'django.contrib.auth',

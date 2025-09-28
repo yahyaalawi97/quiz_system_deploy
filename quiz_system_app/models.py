@@ -103,13 +103,18 @@ class ResultManager(models.Manager):
         return errors
 
    
+from django.db import models
+from django.utils import timezone
+
 class result(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="results")
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="results")
     score = models.IntegerField()
+    total_questions = models.IntegerField(default=0)  
     attempt_date = models.DateTimeField(default=timezone.now)
     objects = ResultManager()
 
     def __str__(self):
-        return f"{self.user.first_name} - {self.quiz.title} ({self.score})"
+        return f"{self.user.first_name} - {self.quiz.title} ({self.score}/{self.total_questions})"
+
 # Create your models here.

@@ -42,7 +42,7 @@
   </nav>
   <div class="container">
     <div class="text-center mb-4">
-      {% if percentage > 50%}
+      {% if percentage > 50 %}
       <h1 class="text-success fw-bold">Well done, {{ user.first_name }} 👏👏👏!</h1>
       <h2 class="text-success fw-bold">Your Score: {{ score }}/{{ total }} ({{ percentage }}%)</h2>
       {% else %}
@@ -50,6 +50,18 @@
 
       <h2 class="text-danger fw-bold">Your Score: {{ score }}/{{ total }} ({{ percentage }}%)</h2>
       {% endif %}
+      <div class="d-flex justify-content-center align-items-center my-4">
+        <div class="card shadow-sm w-100" style="max-width: 350px;">
+
+      <div class="card-body">
+          <h5 class="card-title text-center mb-3">Quiz Stats</h5>
+          <p class="mb-2 pb-2 border-bottom">Total Students Attempted: <strong>{{ total_students }}</strong></p>
+          <p class="mb-2 pb-2 border-bottom">Passed Students: <strong>{{ passed_students }}</strong></p>
+          <p class="mb-0">Success Rate: <strong>{{ success_rate|floatformat:2 }}%</strong></p>
+    </div>
+  </div>
+</div>
+
     </div>
     {% for r in results %}
     <div class="card mb-3 shadow-sm">
@@ -73,7 +85,7 @@
     {% endfor %}
 
 
-    <div class="text-center mt-4 d-flex justify-content-evenly">
+    <div class="d-flex flex-column flex-md-row justify-content-evenly gap-2 text-center mt-4">
       <a href="{% url 'home' %}" class="btn btn-success btn-lg">Back to Home</a>
       <a href="{% url 'do_quiz' quiz.id %}" class="btn btn-warning btn-lg">Retake The Quiz</a>
     </div>

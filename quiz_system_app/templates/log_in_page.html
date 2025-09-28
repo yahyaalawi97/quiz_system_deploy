@@ -45,8 +45,8 @@
     <p>For more about us, visit <a href="{% url 'about_us' %}">About Us</a>.</p>
   </div>
 
-  <div class="d-flex justify-content-center align-items-center vh-75">
-    <div class="card shadow-lg p-4 rounded-4" style="width: 400px;">
+  <div class=" d-flex justify-content-center align-items-center vh-75 px-3">
+    <div class="login-card card shadow-lg p-4 rounded-4">
       <form method="POST">
         {% csrf_token %}
         <h2 class="text-center mb-4 fw-bold">Welcome Back 👋</h2>

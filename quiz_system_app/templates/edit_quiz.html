@@ -39,21 +39,25 @@
     </div>
     </nav>
 
-    <h1 class="text-center">hello {{user.first_name}} , you can now <span class="text-warning">EDIT</span> {{quiz.title}} Quiz</h1>
+<h1 class="text-center mt-4">
+  Welcome back, <strong>{{ user.first_name }}</strong>! <br>
+  You're now ready to <span class=" text-warning">EDIT</span><span class=" text-primary"> {{ quiz.title }}</span>  Quiz
+</h1>
     
     <form method="POST">
         {% csrf_token %}
         <div class="row align-items-center mb-3 ms-3">
-            <div class="col-auto">
-                <label for="quiz_title" class="col-form-label fs-3">Quiz Title :</label>
-            </div>
-            <div class="col-auto">
-                <input placeholder="{{quiz.title}}" type="text" id="quiz_title" class="form-control form-control-sm" name="title" required>
-            </div>
-        </div>
+  <div class="col-12 col-md-auto mb-2 mb-md-0">
+      <label for="quiz_title" class="col-form-label fs-5">Quiz Title :</label>
+  </div>
+  <div class="col-12 col-md-auto">
+      <input placeholder="{{quiz.title}}" type="text" id="quiz_title" class="form-control form-control-sm" name="title" required>
+  </div>
+</div>
+
         <div class="mb-3 ms-3">
             <label for="quiz_description" class="form-label fs-3">Quiz Description :</label>
-            <textarea placeholder="{{quiz.desc}}" name="desc" id="quiz_desc" class="form-control" style="width :600px" rows="3" required></textarea>
+            <textarea placeholder="{{quiz.desc}}" name="desc" id="quiz_desc" class="form-control" class="form-control w-100" rows="2" required></textarea>
         </div>
         <hr>
 
@@ -108,7 +112,8 @@
         </div>
         {% endfor %}
 
-        <button type="submit" class="btn btn-primary ms-3 mt-3">Save Quiz</button>
+<button type="submit" class="btn btn-primary btn-lg mt-3 d-block w-100 w-md-auto">💾 Save Quiz</button>
+
     </form>
 
     <script src="{% static 'script/create_quiz.js' %}"></script>
