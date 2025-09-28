@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Home</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -54,11 +54,12 @@
   <div class="container mb-15 px-3">
     <div class="d-flex justify-content-evenly align-items-center mb-4">
       <h1 class="mb-0">Available Quizzes</h1>
+      {% if user.role == 'admin' %}
       <a href="{% url 'create_quiz' %}" class="btn btn-success btn-lg shadow d-flex align-items-center">
         <i class="bi bi-plus-circle me-2"></i>
         Create a New Quiz
       </a>
-
+      {% endif %}
     </div>
 
     <div class="row">
