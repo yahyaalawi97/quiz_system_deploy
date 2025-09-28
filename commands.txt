@@ -1,0 +1,6 @@
+## to get to quiz_system_webpage ubuntu 
+ssh -i "C:\Users\User\Desktop\django\quiz_system\quiz_system_webpage.pem" ubuntu@16.171.9.187
+## restart MYSQL
+sudo systemctl restart mysql
+## enter my sql
+sudo mysql -u root -p

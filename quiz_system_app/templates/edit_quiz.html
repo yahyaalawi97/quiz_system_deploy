@@ -88,8 +88,7 @@
         <div class="form-check mb-1 w-50 d-flex align-items-center">
           <input class="form-check-input me-2" type="radio" name="q{{ forloop.counter }}_correct" value="{{ option }}"
             {% if option==question.correct_answer %} checked {% endif %}>
-          <input type="text" name="q{{ forloop.counter }}_option{{ forloop.counter0|add:forloop.counter }}"
-            value="{{ option }}" class="form-control w-75" placeholder="Option {{ forloop.counter }}">
+          <input class="form-control w-75" type="text" name="q{{ forloop.parentloop.counter }}_option{{ **forloop.counter** }}">
         </div>
         {% endfor %}
         {% endif %}

@@ -144,54 +144,62 @@ def create_quiz(request):
     return render(request, "create_quiz.html", {"user": user})
 
 #editing ************************
+
 def editquiz (request , quiz_id):
     user_id = request.session.get('user_id')
     if not user_id:
         return redirect('login')
-    user = User.objects.get(id=user_id)
+
     try:
+        user = User.objects.get(id=user_id)
         quiz = Quiz.objects.get(id=quiz_id, created_by=user)
+    except User.DoesNotExist:
+        return redirect('logout') 
     except Quiz.DoesNotExist:
         messages.error(request, "Quiz not found or you don't have permission!")
         return redirect('home')
-    question = Question.objects.filter(quiz = quiz)
+
+    questions = list(Question.objects.filter(quiz=quiz))
+
     if request.method == "POST":
         quiz.title = request.POST.get("title")
         quiz.desc = request.POST.get("desc")
         quiz.save()
 
-        for i , question in enumerate(question , start = 1):
+        for i, question_obj in enumerate(questions, start=1):
             q_text = request.POST.get(f"q{i}_text")
             q_type = request.POST.get(f"q{i}_type")
             correct = request.POST.get(f"q{i}_correct")
 
-            question.question_text = q_text
-            question.question_type = q_type
-            question.correct_answer = correct
+            question_obj.question_text = q_text
+            question_obj.question_type = q_type
+            question_obj.correct_answer = correct
 
-           
             if q_type == "mcq":
                 options = []
-                j = 0
+                j = 1  
                 while True:
-                    option_key = f"q{i}_option{j+1}"
-                    if option_key in request.POST:
-                        options.append(request.POST[option_key])
+                    option_key = f"q{i}_option{j}"
+                    option_value = request.POST.get(option_key)
+                    
+                    if option_value is not None:
+                        if option_value.strip():
+                            options.append(option_value.strip())
                         j += 1
                     else:
-                        break
-                question.options = options
+                        break 
+                question_obj.options = options 
             else:
-                question.options = None  
+                question_obj.options = None
 
-            question.save()
-
+            question_obj.save() 
+        
+        messages.success(request, f"Quiz '{quiz.title}' updated successfully!")
         return redirect ("home")
-
 
     context = {
         "user" : user , 
-        "question" : question ,
+        "question" : questions ,
         "quiz" : quiz,
     }
     return render (request , "edit_quiz.html" , context)

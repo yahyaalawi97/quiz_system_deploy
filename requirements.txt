@@ -9,8 +9,7 @@ django-crispy-forms==2.4
 django-jazzmin==3.0.1
 djangorestframework==3.16.1
 executing==2.2.1
-ipython==9.5.0
-ipython_pygments_lexers==1.1.1
+ipython==8.18.1
 jedi==0.19.2
 matplotlib-inline==0.1.7
 mysqlclient==2.2.7
