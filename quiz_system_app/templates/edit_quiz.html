@@ -60,7 +60,7 @@
 
     <div class="mb-3 ms-3">
       <label for="quiz_description" class="form-label fs-3">Quiz Description :</label>
-      <textarea placeholder="{{quiz.desc}}" name="desc" id="quiz_desc" class="form-control" class="form-control w-100"
+      <textarea placeholder="{{quiz.desc}}" name="desc" id="quiz_desc" class="form-control w-100"
         rows="2" required></textarea>
     </div>
     <hr>
@@ -76,8 +76,8 @@
       <label>Type</label>
       <select name="q{{ forloop.counter }}_type" class="form-select mb-2 w-50"
         onchange="toggleOptions(this, {{ forloop.counter }})">
-        <option value="mcq" {% if question.question_type=='mcq' %}selected{% endif %}>MCQ</option>
-        <option value="tf" {% if question.question_type=='tf' %}selected{% endif %}>True/False</option>
+        <option value="mcq" {% if question.question_type == 'mcq' %}selected{% endif %}>MCQ</option>
+        <option value="tf" {% if question.question_type == 'tf' %}selected{% endif %}>True/False</option>
       </select>
 
       <!-- MCQ  -->
@@ -86,9 +86,9 @@
         {% if question.options %}
         {% for option in question.options %}
         <div class="form-check mb-1 w-50 d-flex align-items-center">
-          <input class="form-check-input me-2" type="radio" name="q{{ forloop.counter }}_correct" value="{{ option }}"
-            {% if option==question.correct_answer %} checked {% endif %}>
-          <input class="form-control w-75" type="text" name="q{{ forloop.parentloop.counter }}_option{{ **forloop.counter** }}">
+          <input class="form-check-input me-2" type="radio" name="q{{ forloop.parentloop.counter }}_correct" value="{{ option }}"
+            {% if option == question.correct_answer %} checked {% endif %}>
+          <input class="form-control w-75" type="text" name="q{{ forloop.parentloop.counter }}_option{{ forloop.counter }}" value="{{ option }}">
         </div>
         {% endfor %}
         {% endif %}
@@ -98,16 +98,12 @@
       <div id="q{{ forloop.counter }}_tf"
         style="display: {% if question.question_type == 'tf' %}block{% else %}none{% endif %};">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="q{{ forloop.counter }}_correct" value="True" {% if
-            question.correct_answer=="True" %} checked {% endif %}>
-          <label
-            class="form-check-label {% if question.correct_answer == 'True' %}text-success fw-bold{% endif %}">True</label>
+          <input class="form-check-input" type="radio" name="q{{ forloop.counter }}_correct" value="True" {% if question.correct_answer == "True" %} checked {% endif %}>
+          <label class="form-check-label {% if question.correct_answer == 'True' %}text-success fw-bold{% endif %}">True</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="q{{ forloop.counter }}_correct" value="False" {% if
-            question.correct_answer=="False" %} checked {% endif %}>
-          <label
-            class="form-check-label {% if question.correct_answer == 'False' %}text-success fw-bold{% endif %}">False</label>
+          <input class="form-check-input" type="radio" name="q{{ forloop.counter }}_correct" value="False" {% if question.correct_answer == "False" %} checked {% endif %}>
+          <label class="form-check-label {% if question.correct_answer == 'False' %}text-success fw-bold{% endif %}">False</label>
         </div>
       </div>
     </div>
